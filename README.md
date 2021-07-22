@@ -13,4 +13,4 @@ Utilisation : Déposez backdoorLnkMacroObfuscated.py dans rootEmpireFolder/lib/s
 
 Lors de l'exécution du stager, un fichier macro et un fichier xml seront générés, assurez-vous que le xml se trouve sur le serveur web configuré lors de l'installation du stager et qu'il s'agit d'un emplacement accessible sur le système distant.
 
-Créé par 4po (apo#1337)
+Créé par 4po (apo#0001)
