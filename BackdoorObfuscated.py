@@ -7,7 +7,7 @@ def __init__(self, mainMenu, params=[]):
 
         self.info = {
             'Name': 'BackdoorLnkMacro',
-            'Author': ['4po (@apo#1337)'],
+            'Author': ['4po (@apo#0001)'],
         }
 xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(4,8)))
 
