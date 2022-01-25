@@ -6,7 +6,7 @@ class stager:
 def __init__(self, mainMenu, params=[]):
 
         self.info = {
-            'Name': 'BackdoorLnkMacro',
+            'Name': 'BackdoorObfuscated',
             'Author': ['4po (@apo#0001)'],
         }
 xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(4,8)))
