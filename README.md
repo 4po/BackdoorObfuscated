@@ -1,5 +1,5 @@
 # BackdoorObfuscated
-Backdoor Lnk Obfuscated Macro ( Cachée ) Développé par 4po.
+Backdoor Obfuscated Macro ( Cachée ) Développé par 4po.
 
 Clause de non-responsabilité : Conçu pour l'expérience de codage et pour tester les mesures de sécurité du client dans le cadre de ses missions. NE PAS utiliser contre des systèmes/utilisateurs sur lesquels vous n'avez pas la permission explicite de faire des tests.
 
